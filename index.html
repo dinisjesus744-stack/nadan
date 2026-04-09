@@ -3,154 +3,166 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Store Premium | FiveM & GTA RP</title>
+    <title>Nova Capital Inspired | Store</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Orbitron:wght@900&display=swap" rel="stylesheet">
 
     <style>
-        /* CSS CUSTOMIZADO (STYLE.CSS INTEGRADO) */
         [x-cloak] { display: none !important; }
         
         :root {
-            --primary: #6366f1;
-            --secondary: #a855f7;
-            --dark-bg: #08080a;
-            --glass: rgba(255, 255, 255, 0.03);
+            --accent: #7c3aed; /* Roxo vibrante estilo Nova Capital */
+            --bg-dark: #050505;
         }
 
         body {
-            background-color: var(--dark-bg);
+            background-color: var(--bg-dark);
             color: white;
-            font-family: 'Inter', sans-serif;
+            font-family: 'Montserrat', sans-serif;
             overflow-x: hidden;
         }
 
-        .font-gamer { font-family: 'Orbitron', sans-serif; }
+        .font-header { font-family: 'Orbitron', sans-serif; }
 
-        /* Efeitos de Vidro (Glassmorphism) */
+        /* Background Dinâmico Estilo Nova Capital */
+        .hero-bg {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
+                        url('https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=2070');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
         .glass {
-            background: var(--glass);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        .text-gradient {
-            background: linear-gradient(90deg, #6366f1, #00d1ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .btn-glow {
+            transition: 0.4s ease;
+            box-shadow: 0 0 0px rgba(124, 58, 237, 0);
         }
 
-        .neon-border {
-            box-shadow: 0 0 15px rgba(99, 102, 241, 0.2);
-            border: 1px solid rgba(99, 102, 241, 0.4);
+        .btn-glow:hover {
+            box-shadow: 0 0 25px rgba(124, 58, 237, 0.6);
+            transform: scale(1.05);
         }
 
-        /* Animação de entrada das notificações */
-        .notif-enter { transform: translateX(0) !important; }
-        
-        /* Botão Premium */
-        .btn-premium {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            transition: all 0.3s ease;
-        }
-        .btn-premium:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
+        /* Card de Produto Estilo Premium */
+        .card-premium {
+            background: #0f0f12;
+            border-bottom: 4px solid transparent;
+            transition: 0.3s;
         }
 
-        /* Scrollbar customizada */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #0a0a0b; }
-        ::-webkit-scrollbar-thumb { background: #1f1f23; border-radius: 10px; }
+        .card-premium:hover {
+            border-bottom: 4px solid var(--accent);
+            background: #16161d;
+        }
+
+        .text-stroke {
+            -webkit-text-stroke: 1px rgba(255,255,255,0.1);
+            color: transparent;
+        }
     </style>
 </head>
 <body x-data="storeApp()">
 
-    <div id="fake-notif" 
-         class="fixed bottom-6 right-6 z-50 glass p-4 rounded-xl border-l-4 border-indigo-500 transition-all duration-700 translate-x-[150%]">
-        <div class="flex items-center gap-3">
-            <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-            <div>
-                <p class="text-[10px] text-gray-400 uppercase font-bold tracking-widest">Atividade Recente</p>
-                <p class="text-sm" id="notif-content">Alguém comprou um produto!</p>
-            </div>
-        </div>
-    </div>
-
-    <nav class="sticky top-0 z-40 glass border-b border-white/5 px-6 py-4">
+    <nav class="fixed top-0 w-full z-50 px-6 py-5 transition-all duration-300" 
+         :class="scrollY > 50 ? 'glass py-3' : 'bg-transparent'">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <div @click="page = 'home'" class="cursor-pointer font-gamer text-xl tracking-tighter text-gradient uppercase">VIRTUAL STORE</div>
+            <div @click="page = 'home'" class="cursor-pointer font-header text-2xl tracking-tighter">
+                NOVA<span class="text-purple-600">CAPITAL</span>
+            </div>
             
-            <div class="hidden md:flex space-x-8 text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400">
-                <button @click="page = 'home'" :class="page === 'home' ? 'text-indigo-400' : ''" class="hover:text-white transition">Início</button>
-                <button @click="page = 'loja'" :class="page === 'loja' ? 'text-indigo-400' : ''" class="hover:text-white transition">Loja</button>
-                <button @click="page = 'perfil'" :class="page === 'perfil' ? 'text-indigo-400' : ''" class="hover:text-white transition">Meus Pedidos</button>
-                <button @click="page = 'suporte'" :class="page === 'suporte' ? 'text-indigo-400' : ''" class="hover:text-white transition">Suporte</button>
+            <div class="hidden md:flex space-x-10 text-[11px] font-bold uppercase tracking-widest">
+                <a @click="page = 'home'" class="cursor-pointer hover:text-purple-500 transition">Home</a>
+                <a @click="page = 'loja'" class="cursor-pointer hover:text-purple-500 transition">Loja</a>
+                <a href="https://discord.gg/dSD3cvS5bb" class="cursor-pointer hover:text-purple-500 transition">Comunidade</a>
+                <a @click="page = 'suporte'" class="cursor-pointer hover:text-purple-500 transition">Suporte</a>
             </div>
 
-            <a href="https://discord.gg/dSD3cvS5bb" target="_blank" class="bg-[#5865F2] hover:bg-[#4752C4] px-5 py-2 rounded-lg text-xs font-bold transition uppercase">Discord</a>
+            <button @click="page = 'loja'" class="bg-purple-600 px-6 py-2 rounded font-bold text-xs uppercase btn-glow">
+                Loja Oficial
+            </button>
         </div>
     </nav>
 
     <template x-if="page === 'home'">
-        <main class="pt-20 px-6">
-            <div class="max-w-7xl mx-auto text-center">
-                <div class="inline-block px-4 py-1 rounded-full border border-indigo-500/30 bg-indigo-500/10 text-indigo-400 text-[10px] font-bold mb-8 tracking-widest uppercase">✨ Entrega Automática via Bot</div>
-                <h1 class="text-5xl md:text-8xl font-gamer mb-8 leading-none">EVOLUA SEU <br><span class="text-gradient uppercase">ROLEPLAY.</span></h1>
-                <p class="text-gray-400 text-lg max-w-2xl mx-auto mb-12">Adquira vantagens exclusivas, moedas e cargos com total segurança e rapidez.</p>
-                <div class="flex flex-col md:flex-row justify-center gap-4">
-                    <button @click="page = 'loja'" class="btn-premium px-12 py-5 rounded-2xl font-bold uppercase tracking-widest">Ir para a Loja</button>
-                    <a href="https://discord.gg/dSD3cvS5bb" class="glass px-12 py-5 rounded-2xl font-bold uppercase tracking-widest hover:bg-white/5 transition">Entrar na Comunidade</a>
-                </div>
-                
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-32 max-w-4xl mx-auto">
-                    <div class="glass p-6 rounded-2xl">
-                        <p class="text-2xl font-gamer text-indigo-500">+1.2k</p>
-                        <p class="text-[10px] text-gray-500 uppercase font-bold">Vendas</p>
-                    </div>
-                    <div class="glass p-6 rounded-2xl">
-                        <p class="text-2xl font-gamer text-indigo-500">24/7</p>
-                        <p class="text-[10px] text-gray-500 uppercase font-bold">Suporte</p>
-                    </div>
-                    <div class="glass p-6 rounded-2xl">
-                        <p class="text-2xl font-gamer text-indigo-500">0s</p>
-                        <p class="text-[10px] text-gray-500 uppercase font-bold">Espera</p>
-                    </div>
-                    <div class="glass p-6 rounded-2xl">
-                        <p class="text-2xl font-gamer text-indigo-500">100%</p>
-                        <p class="text-[10px] text-gray-500 uppercase font-bold">Seguro</p>
+        <div>
+            <header class="hero-bg h-screen flex items-center justify-center text-center px-6">
+                <div class="max-w-4xl">
+                    <h1 class="font-header text-6xl md:text-9xl mb-4 tracking-tighter animate-pulse uppercase">
+                        NOVA <span class="text-purple-600 italic">CAPITAL</span>
+                    </h1>
+                    <p class="text-gray-300 text-lg md:text-xl font-light tracking-widest uppercase mb-10">
+                        O futuro do Roleplay começa agora.
+                    </p>
+                    <div class="flex flex-col md:flex-row gap-5 justify-center">
+                        <button @click="page = 'loja'" class="bg-white text-black px-12 py-4 font-bold uppercase tracking-widest hover:bg-purple-600 hover:text-white transition duration-500">
+                            Adquirir Benefícios
+                        </button>
+                        <a href="https://discord.gg/dSD3cvS5bb" class="border border-white/20 px-12 py-4 font-bold uppercase tracking-widest hover:bg-white/10 transition">
+                            Entrar no Discord
+                        </a>
                     </div>
                 </div>
-            </div>
-        </main>
+            </header>
+
+            <section class="py-24 px-6 bg-[#050505]">
+                <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+                    <div>
+                        <h2 class="font-header text-4xl mb-6 uppercase italic">Imersão Total</h2>
+                        <p class="text-gray-400 leading-relaxed mb-6">
+                            Na Nova Capital, buscamos o equilíbrio perfeito entre diversão e realismo. Sistemas exclusivos, economia balanceada e uma staff ativa para garantir o seu divertimento.
+                        </p>
+                        <ul class="space-y-3 text-sm font-bold uppercase text-purple-500">
+                            <li>+ Sistemas de Drogas Exclusivos</li>
+                            <li>+ Concessionária com +500 Carros</li>
+                            <li>+ Eventos Diários</li>
+                        </ul>
+                    </div>
+                    <div class="glass h-64 rounded-xl flex items-center justify-center border-purple-600/30">
+                        <span class="text-purple-600 font-header text-2xl">[ VÍDEO DO SERVIDOR ]</span>
+                    </div>
+                </div>
+            </section>
+        </div>
     </template>
 
     <template x-if="page === 'loja'">
-        <main class="max-w-7xl mx-auto px-6 py-16">
-            <div class="flex flex-col md:flex-row justify-between items-center mb-16 gap-6">
-                <h2 class="text-3xl font-gamer uppercase tracking-widest">Catálogo <span class="text-indigo-500">Digital</span></h2>
-                <div class="flex gap-2 glass p-1 rounded-xl">
-                    <template x-for="cat in ['todos', 'vip', 'coins', 'packs']">
-                        <button @click="filter = cat" 
-                                :class="filter === cat ? 'bg-indigo-600 text-white shadow-lg' : 'text-gray-500 hover:text-white'"
-                                class="px-6 py-2 rounded-lg text-[10px] font-bold uppercase transition" x-text="cat"></button>
-                    </template>
-                </div>
+        <main class="pt-32 pb-20 px-6 max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="font-header text-5xl uppercase italic mb-4">Loja <span class="text-purple-600">Oficial</span></h2>
+                <div class="w-24 h-1 bg-purple-600 mx-auto"></div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <div class="flex justify-center gap-4 mb-12">
+                <button @click="filter = 'todos'" :class="filter === 'todos' ? 'bg-purple-600' : 'bg-white/5'" class="px-8 py-2 rounded uppercase text-[10px] font-bold tracking-widest">Todos</button>
+                <button @click="filter = 'vip'" :class="filter === 'vip' ? 'bg-purple-600' : 'bg-white/5'" class="px-8 py-2 rounded uppercase text-[10px] font-bold tracking-widest">VIPs</button>
+                <button @click="filter = 'coins'" :class="filter === 'coins' ? 'bg-purple-600' : 'bg-white/5'" class="px-8 py-2 rounded uppercase text-[10px] font-bold tracking-widest">Coins</button>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <template x-for="item in products">
-                    <div x-show="filter === 'todos' || filter === item.category" class="glass p-6 rounded-3xl group hover:border-indigo-500/50 transition duration-500 flex flex-col h-full">
-                        <div class="mb-6">
-                            <span class="text-indigo-400 text-[9px] font-bold uppercase tracking-[0.2em]" x-text="item.badge"></span>
-                            <h3 class="text-xl font-bold mt-2" x-text="item.name"></h3>
-                            <p class="text-gray-500 text-xs mt-3 leading-relaxed" x-text="item.desc"></p>
+                    <div x-show="filter === 'todos' || filter === item.category" 
+                         class="card-premium p-8 rounded-lg flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-start mb-6">
+                                <h3 class="font-header text-xl" x-text="item.name"></h3>
+                                <span class="text-[10px] bg-purple-600/20 text-purple-500 px-2 py-1 rounded" x-text="item.badge"></span>
+                            </div>
+                            <p class="text-gray-500 text-sm mb-8 leading-relaxed italic" x-text="item.desc"></p>
                         </div>
-                        <div class="mt-auto">
-                            <p class="text-2xl font-bold mb-5" x-text="'R$ ' + item.price.toFixed(2)"></p>
-                            <button @click="cart = item; page = 'checkout'" class="w-full btn-premium py-4 rounded-xl font-bold text-[10px] uppercase tracking-widest">Adquirir Agora</button>
+                        <div>
+                            <div class="text-3xl font-bold mb-6 text-white" x-text="'R$ ' + item.price.toFixed(2)"></div>
+                            <button @click="cart = item; page = 'checkout'" 
+                                    class="w-full border border-purple-600 text-purple-500 hover:bg-purple-600 hover:text-white py-4 font-bold uppercase tracking-widest transition duration-300">
+                                Adquirir Agora
+                            </button>
                         </div>
                     </div>
                 </template>
@@ -159,76 +171,50 @@
     </template>
 
     <template x-if="page === 'checkout'">
-        <main class="max-w-2xl mx-auto px-6 py-20">
-            <div class="glass p-10 rounded-[2.5rem] neon-border">
-                <h2 class="text-2xl font-gamer text-center mb-10 uppercase">Finalizar Compra</h2>
+        <main class="pt-40 pb-20 px-6 max-w-xl mx-auto">
+            <div class="glass p-10 rounded-lg">
+                <h2 class="font-header text-2xl mb-8 uppercase italic">Finalizar Pedido</h2>
+                <div class="flex justify-between border-b border-white/10 pb-4 mb-8">
+                    <span class="text-gray-400 uppercase font-bold text-xs" x-text="cart.name"></span>
+                    <span class="text-purple-500 font-bold" x-text="'R$ ' + cart.price.toFixed(2)"></span>
+                </div>
                 
-                <div class="bg-white/5 p-6 rounded-2xl mb-8 flex justify-between items-center border border-white/5">
-                    <div>
-                        <p class="text-[10px] text-gray-500 uppercase font-bold">Produto Selecionado</p>
-                        <p class="text-xl font-bold" x-text="cart.name"></p>
-                    </div>
-                    <p class="text-2xl font-bold text-indigo-400" x-text="'R$ ' + cart.price.toFixed(2)"></p>
+                <div class="mb-8">
+                    <label class="block text-[10px] uppercase font-bold text-gray-500 mb-2">ID do Discord (usuario#0000)</label>
+                    <input type="text" x-model="discordID" class="w-full bg-white/5 border border-white/10 p-4 rounded focus:border-purple-600 outline-none transition">
                 </div>
 
-                <div class="space-y-6">
-                    <div>
-                        <label class="block text-[10px] font-bold text-gray-500 uppercase mb-3 ml-1 tracking-widest">ID do Discord (usuario#0000)</label>
-                        <input type="text" x-model="discordID" placeholder="Ex: pedro#1234" class="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 focus:outline-none focus:border-indigo-500 transition text-white">
-                        <p class="text-[9px] text-gray-500 mt-2 px-1 uppercase">Sua recompensa será vinculada a esta conta.</p>
-                    </div>
-
-                    <div class="pt-4 space-y-3">
-                        <button @click="processPayment" class="w-full btn-premium py-5 rounded-2xl font-bold uppercase tracking-[0.2em]">Pagar com Pix ou Cartão</button>
-                        <button @click="page = 'loja'" class="w-full text-gray-500 text-[10px] font-bold uppercase py-2 hover:text-white transition">Voltar para a Loja</button>
-                    </div>
-                </div>
+                <button @click="alert('Redirecionando para pagamento seguro...')" class="w-full bg-purple-600 py-4 font-bold uppercase tracking-widest btn-glow">
+                    Ir para o Pagamento
+                </button>
+                <button @click="page = 'loja'" class="w-full mt-4 text-gray-500 text-[10px] font-bold uppercase">Voltar</button>
             </div>
         </main>
     </template>
 
-    <template x-if="page === 'perfil'">
-        <main class="max-w-4xl mx-auto px-6 py-20">
-            <div class="glass p-10 rounded-[2.5rem]">
-                <h2 class="text-2xl font-gamer mb-10 uppercase tracking-widest">Meus <span class="text-indigo-500">Dados</span></h2>
-                <div class="grid md:grid-cols-2 gap-6 text-center">
-                    <div class="p-8 bg-white/5 rounded-3xl border border-white/5">
-                        <p class="text-xs text-gray-500 uppercase mb-4 font-bold tracking-widest">Status da Conta</p>
-                        <p class="text-sm font-bold text-gray-300">Nenhum VIP ativo no momento.</p>
-                    </div>
-                    <div class="p-8 bg-white/5 rounded-3xl border border-white/5">
-                        <p class="text-xs text-gray-500 uppercase mb-4 font-bold tracking-widest">Pedidos realizados</p>
-                        <p class="text-sm font-bold text-gray-300 italic font-light">Histórico vazio.</p>
-                    </div>
-                </div>
+    <footer class="py-20 border-t border-white/5 bg-[#030303] px-6">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-10">
+            <div>
+                <div class="font-header text-xl mb-4">NOVA<span class="text-purple-600">CAPITAL</span></div>
+                <p class="text-gray-600 text-[10px] uppercase tracking-widest">© 2026 High Quality Roleplay. All rights reserved.</p>
             </div>
-        </main>
-    </template>
-
-    <template x-if="page === 'suporte'">
-        <main class="max-w-4xl mx-auto px-6 py-20 text-center">
-            <h2 class="text-5xl font-gamer mb-6 uppercase leading-tight italic">Precisa de <span class="text-indigo-500">Ajuda?</span></h2>
-            <p class="text-gray-400 mb-12 max-w-lg mx-auto leading-relaxed">Nossa equipe atende 24 horas por dia através do Discord para garantir que sua experiência seja perfeita.</p>
-            
-            <a href="https://discord.gg/dSD3cvS5bb" class="inline-flex items-center gap-4 bg-[#5865F2] px-12 py-6 rounded-3xl font-bold text-lg hover:scale-105 transition shadow-2xl">
-                ABRIR SUPORTE NO DISCORD
-            </a>
-        </main>
-    </template>
-
-    <footer class="py-20 border-t border-white/5 mt-20">
-        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
-            <div class="text-center md:text-left">
-                <div class="font-gamer text-gradient text-xl mb-2 uppercase">Virtual Store</div>
-                <p class="text-gray-600 text-[10px] font-bold tracking-widest uppercase">Não afiliado à Rockstar Games ou Take-Two.</p>
-            </div>
-            <div class="flex gap-8 text-[10px] font-bold text-gray-500 uppercase tracking-widest">
-                <a href="#" class="hover:text-white transition">Termos</a>
-                <a href="#" class="hover:text-white transition">Privacidade</a>
-                <a href="https://discord.gg/dSD3cvS5bb" class="text-indigo-400 hover:underline">Contato</a>
+            <div class="flex gap-8">
+                <a href="#" class="text-gray-500 hover:text-white transition uppercase text-[10px] font-bold">Termos</a>
+                <a href="#" class="text-gray-500 hover:text-white transition uppercase text-[10px] font-bold">Discord</a>
+                <a href="#" class="text-gray-500 hover:text-white transition uppercase text-[10px] font-bold">Contato</a>
             </div>
         </div>
     </footer>
+
+    <div id="fake-notif" class="fixed bottom-10 right-10 z-[100] glass p-4 rounded-lg translate-x-[200%] transition-all duration-700">
+        <div class="flex items-center gap-4">
+            <div class="w-10 h-10 bg-purple-600 rounded flex items-center justify-center font-bold italic">NC</div>
+            <div>
+                <p class="text-[10px] text-purple-400 font-bold uppercase">Novo Morador VIP</p>
+                <p class="text-sm font-bold" id="notif-content">Alguém comprou!</p>
+            </div>
+        </div>
+    </div>
 
     <script>
         function storeApp() {
@@ -237,50 +223,30 @@
                 filter: 'todos',
                 cart: null,
                 discordID: '',
+                scrollY: 0,
                 products: [
-                    { id: 1, category: 'vip', name: 'VIP DIAMOND', price: 89.90, desc: 'Prioridade máxima, carros exclusivos, tag diamante e salário bônus de 50k.', badge: 'Mais Vendido' },
-                    { id: 2, category: 'vip', name: 'VIP PLATINUM', price: 49.90, desc: 'Prioridade média, carros platinum e tag exclusiva no chat.', badge: 'Popular' },
-                    { id: 3, category: 'coins', name: 'PACK 1 MILHÃO', price: 60.00, desc: 'Um milhão de moedas limpas no seu banco in-game.', badge: 'Ofertão' },
-                    { id: 4, category: 'coins', name: 'PACK 500K', price: 35.00, desc: 'Quinhentas mil moedas limpas no seu banco in-game.', badge: 'Recomendado' },
-                    { id: 5, category: 'packs', name: 'STARTER PACK', price: 15.00, desc: 'Mochila G, Kit Reparo, Celular e Rádio integrados.', badge: 'Novo' },
-                    { id: 6, category: 'packs', name: 'ARMA PACK', price: 25.00, desc: 'Glock + 5 carregadores e colete pesado.', badge: 'Combate' }
+                    { category: 'vip', name: 'VIP SUPREMO', price: 150.00, badge: 'MELHOR VALOR', desc: 'Salário de 100k, 5 carros importados, mansão e prioridade máxima.' },
+                    { category: 'vip', name: 'VIP ELITE', price: 80.00, badge: 'POPULAR', desc: 'Salário de 50k, 2 carros importados e prioridade na fila.' },
+                    { category: 'coins', name: '2.000.000 COINS', price: 50.00, badge: 'PROMO', desc: 'Moedas limpas entregues diretamente no seu banco.' },
+                    { category: 'coins', name: '500.000 COINS', price: 20.00, badge: 'RECOMENDADO', desc: 'Ideal para comprar seu primeiro carro e casa.' }
                 ],
-                processPayment() {
-                    if (!this.discordID) {
-                        alert("Por favor, digite seu ID do Discord para continuar!");
-                        return;
-                    }
-                    alert("Aguarde... conectando ao gateway de pagamento seguro!");
-                    // Aqui você redirecionaria para o link do Checkout Real (Stripe/Pix)
+                init() {
+                    window.addEventListener('scroll', () => this.scrollY = window.scrollY);
+                    
+                    // Notificação Fake
+                    const users = ["Mandrake", "Ghost", "Xandão", "Biel", "Vini7"];
+                    const el = document.getElementById('fake-notif');
+                    const content = document.getElementById('notif-content');
+                    
+                    setInterval(() => {
+                        const u = users[Math.floor(Math.random()*users.length)];
+                        content.innerText = `${u} adquiriu um VIP!`;
+                        el.classList.remove('translate-x-[200%]');
+                        setTimeout(() => el.classList.add('translate-x-[200%]'), 5000);
+                    }, 25000);
                 }
             }
         }
-
-        // Sistema de Notificações Fake de Vendas (Aumenta Conversão)
-        function initNotifs() {
-            const users = ["Mandrake", "Ghost", "Xandão", "Biel_RP", "Vini7", "Teteu", "Coringa", "Lari_RP", "Dono do Morro"];
-            const items = ["VIP Diamond", "VIP Platinum", "Pack 1 Milhão", "Starter Pack"];
-            
-            const el = document.getElementById('fake-notif');
-            const content = document.getElementById('notif-content');
-            
-            setInterval(() => {
-                const u = users[Math.floor(Math.random() * users.length)];
-                const i = items[Math.floor(Math.random() * items.length)];
-                
-                content.innerHTML = `<strong>${u}</strong> acabou de adquirir <strong>${i}</strong>!`;
-                
-                // Mostrar
-                el.classList.remove('translate-x-[150%]');
-                
-                // Esconder após 5 seg
-                setTimeout(() => {
-                    el.classList.add('translate-x-[150%]');
-                }, 5000);
-            }, 20000); // Roda a cada 20 segundos
-        }
-
-        window.onload = initNotifs;
     </script>
 </body>
 </html>
