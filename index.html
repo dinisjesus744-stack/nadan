@@ -1,1 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt-pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEXUS BOTS | Especialistas em Discord & Web</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <style>
+        body {
+            background-color: #050505;
+            color: white;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+        .neon-text { text-shadow: 0 0 10px #8b5cf6, 0 0 20px #8b5cf6; }
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        .glass:hover {
+            border: 1px solid #8b5cf6;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.2);
+        }
+        .bg-gradient-hero { background: radial-gradient(circle at 50% -20%, #312e81, #050505); }
+        .btn-nexus {
+            background: linear-gradient(90deg, #6366f1, #a855f7);
+            transition: 0.3s;
+        }
+        .btn-nexus:hover {
+            filter: brightness(1.2);
+            box-shadow: 0 0 20px rgba(168, 85, 247, 0.5);
+        }
+        #particles-js { position: fixed; width: 100%; height: 100%; z-index: -1; top: 0; left: 0; }
+        .loader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #050505; display: flex; justify-content: center; align-items: center; z-index: 9999;
+        }
+        html { scroll-behavior: smooth; }
+    </style>
+</head>
+<body class="bg-gradient-hero">
 
+    <div id="loader" class="loader">
+        <div class="text-3xl font-bold neon-text animate-pulse">NEXUS BOTS...</div>
+    </div>
+
+    <div id="particles-js"></div>
+
+    <nav class="fixed w-full z-50 px-6 py-4 flex justify-between items-center bg-black/50 backdrop-blur-md border-b border-white/10">
+        <div class="text-2xl font-black tracking-tighter italic">NEXUS<span class="text-purple-500">BOTS</span></div>
+        <div class="hidden md:flex space-x-8 font-medium">
+            <a href="#" class="hover:text-purple-400 transition">Home</a>
+            <a href="#servicos" class="hover:text-purple-400 transition">Serviços</a>
+            <a href="#comunidade" class="hover:text-purple-400 transition">Comunidade</a>
+        </div>
+        <a href="https://discord.gg/RZQS8zMM85" target="_blank" class="btn-nexus px-6 py-2 rounded-full font-bold flex items-center gap-2">
+            <i class="fab fa-discord"></i> Entrar no Discord
+        </a>
+    </nav>
+
+    <section class="h-screen flex flex-col justify-center items-center text-center px-4">
+        <h1 class="text-4xl md:text-7xl font-extrabold mb-6 tracking-tight uppercase" data-aos="fade-up">
+            Desenvolvimento de Bots e <br>
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600">Websites Profissionais</span>
+        </h1>
+        <p class="text-gray-400 text-lg md:text-xl max-w-2xl mb-10" data-aos="fade-up" data-aos-delay="200">
+            Automatiza o teu servidor Discord e cria a tua presença online com a Nexus Bots.
+        </p>
+        <div class="flex flex-col md:flex-row gap-4" data-aos="fade-up" data-aos-delay="400">
+            <a href="#servicos" class="btn-nexus px-10 py-4 rounded-xl font-bold text-lg transition-transform hover:scale-105">🚀 Ver Serviços</a>
+            <a href="https://discord.gg/RZQS8zMM85" target="_blank" class="bg-white/10 hover:bg-white/20 px-10 py-4 rounded-xl font-bold text-lg backdrop-blur-md transition flex items-center gap-2">
+                <i class="fab fa-discord"></i> Abrir Ticket no Discord
+            </a>
+        </div>
+    </section>
+
+    <section id="servicos" class="py-20 px-6 max-w-7xl mx-auto">
+        <h2 class="text-4xl font-bold text-center mb-16" data-aos="fade-down">Nossos <span class="text-purple-500">Serviços</span></h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div class="glass p-8 rounded-3xl text-center" data-aos="zoom-in">
+                <i class="fas fa-robot text-5xl text-purple-500 mb-6"></i>
+                <h3 class="text-xl font-bold mb-4">Bots Personalizados</h3>
+                <p class="text-gray-400">Sistemas de economia, moderação e integrações exclusivas.</p>
+            </div>
+            <div class="glass p-8 rounded-3xl text-center" data-aos="zoom-in" data-aos-delay="100">
+                <i class="fas fa-globe text-5xl text-blue-500 mb-6"></i>
+                <h3 class="text-xl font-bold mb-4">Criação de Websites</h3>
+                <p class="text-gray-400">Landing pages e Dashboards modernos e responsivos.</p>
+            </div>
+            <div class="glass p-8 rounded-3xl text-center" data-aos="zoom-in" data-aos-delay="200">
+                <i class="fas fa-ticket-alt text-5xl text-purple-500 mb-6"></i>
+                <h3 class="text-xl font-bold mb-4">Tickets Automáticos</h3>
+                <p class="text-gray-400">Suporte eficiente para atender os teus clientes via Discord.</p>
+            </div>
+            <div class="glass p-8 rounded-3xl text-center" data-aos="zoom-in" data-aos-delay="300">
+                <i class="fas fa-lock text-5xl text-blue-500 mb-6"></i>
+                <h3 class="text-xl font-bold mb-4">Segurança & Automação</h3>
+                <p class="text-gray-400">Proteção anti-raid e automação de processos.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="comunidade" class="py-20 px-6 max-w-4xl mx-auto text-center">
+        <div class="glass p-12 rounded-3xl" data-aos="fade-up">
+            <h2 class="text-4xl font-bold mb-6 italic text-white uppercase">Precisas de <span class="text-purple-500">Ajuda?</span></h2>
+            <p class="text-gray-300 text-lg mb-8">
+                Para garantir um atendimento rápido e seguro, todos os nossos tickets são geridos diretamente no nosso servidor oficial do Discord.
+            </p>
+            <a href="https://discord.gg/RZQS8zMM85" target="_blank" class="btn-nexus inline-flex items-center gap-3 px-12 py-5 rounded-2xl font-black text-xl transition-all hover:scale-110">
+                <i class="fab fa-discord text-2xl"></i> JUNTAR AO SERVIDOR & ABRIR TICKET
+            </a>
+        </div>
+    </section>
+
+    <footer class="py-10 border-t border-white/10 text-center text-gray-500">
+        <p class="mb-2 italic font-bold text-white uppercase">Nexus Bots</p>
+        <p>&copy; 2026 - Todos os direitos reservados</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        AOS.init({ duration: 800, once: true });
+
+        window.onload = () => {
+            setTimeout(() => {
+                document.getElementById('loader').style.opacity = '0';
+                setTimeout(() => document.getElementById('loader').style.display = 'none', 500);
+            }, 800);
+        };
+
+        particlesJS("particles-js", {
+            "particles": {
+                "number": { "value": 80 },
+                "color": { "value": "#8b5cf6" },
+                "line_linked": { "enable": true, "color": "#6366f1", "opacity": 0.2 },
+                "move": { "enable": true, "speed": 2 }
+            }
+        });
+    </script>
+</body>
+</html>
