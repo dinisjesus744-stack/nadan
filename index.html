@@ -1,252 +1,291 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-pt">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nova Capital Inspired | Store</title>
-    
+    <title>NEXUS BOTS | Especialistas em Discord & Web</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Orbitron:wght@900&display=swap" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
     <style>
-        [x-cloak] { display: none !important; }
-        
-        :root {
-            --accent: #7c3aed; /* Roxo vibrante estilo Nova Capital */
-            --bg-dark: #050505;
-        }
-
         body {
-            background-color: var(--bg-dark);
+            background-color: #050505;
             color: white;
-            font-family: 'Montserrat', sans-serif;
+            font-family: 'Inter', sans-serif;
             overflow-x: hidden;
         }
 
-        .font-header { font-family: 'Orbitron', sans-serif; }
-
-        /* Background Dinâmico Estilo Nova Capital */
-        .hero-bg {
-            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
-                        url('https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=2070');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
+        .neon-text {
+            text-shadow: 0 0 10px #8b5cf6, 0 0 20px #8b5cf6;
         }
 
         .glass {
             background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
         }
 
-        .btn-glow {
-            transition: 0.4s ease;
-            box-shadow: 0 0 0px rgba(124, 58, 237, 0);
+        .glass:hover {
+            border: 1px solid #8b5cf6;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.2);
         }
 
-        .btn-glow:hover {
-            box-shadow: 0 0 25px rgba(124, 58, 237, 0.6);
-            transform: scale(1.05);
+        .bg-gradient-hero {
+            background: radial-gradient(circle at 50% -20%, #312e81, #050505);
         }
 
-        /* Card de Produto Estilo Premium */
-        .card-premium {
-            background: #0f0f12;
-            border-bottom: 4px solid transparent;
+        .btn-nexus {
+            background: linear-gradient(90deg, #6366f1, #a855f7);
             transition: 0.3s;
         }
 
-        .card-premium:hover {
-            border-bottom: 4px solid var(--accent);
-            background: #16161d;
+        .btn-nexus:hover {
+            filter: brightness(1.2);
+            box-shadow: 0 0 20px rgba(168, 85, 247, 0.5);
         }
 
-        .text-stroke {
-            -webkit-text-stroke: 1px rgba(255,255,255,0.1);
-            color: transparent;
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            top: 0;
+            left: 0;
+        }
+
+        .loader {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: #050505;
+            display: flex; justify-content: center; align-items: center;
+            z-index: 9999;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
     </style>
 </head>
-<body x-data="storeApp()">
+<body class="bg-gradient-hero">
 
-    <nav class="fixed top-0 w-full z-50 px-6 py-5 transition-all duration-300" 
-         :class="scrollY > 50 ? 'glass py-3' : 'bg-transparent'">
-        <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <div @click="page = 'home'" class="cursor-pointer font-header text-2xl tracking-tighter">
-                NOVA<span class="text-purple-600">CAPITAL</span>
-            </div>
-            
-            <div class="hidden md:flex space-x-10 text-[11px] font-bold uppercase tracking-widest">
-                <a @click="page = 'home'" class="cursor-pointer hover:text-purple-500 transition">Home</a>
-                <a @click="page = 'loja'" class="cursor-pointer hover:text-purple-500 transition">Loja</a>
-                <a href="https://discord.gg/dSD3cvS5bb" class="cursor-pointer hover:text-purple-500 transition">Comunidade</a>
-                <a @click="page = 'suporte'" class="cursor-pointer hover:text-purple-500 transition">Suporte</a>
-            </div>
-
-            <button @click="page = 'loja'" class="bg-purple-600 px-6 py-2 rounded font-bold text-xs uppercase btn-glow">
-                Loja Oficial
-            </button>
-        </div>
-    </nav>
-
-    <template x-if="page === 'home'">
-        <div>
-            <header class="hero-bg h-screen flex items-center justify-center text-center px-6">
-                <div class="max-w-4xl">
-                    <h1 class="font-header text-6xl md:text-9xl mb-4 tracking-tighter animate-pulse uppercase">
-                        NOVA <span class="text-purple-600 italic">CAPITAL</span>
-                    </h1>
-                    <p class="text-gray-300 text-lg md:text-xl font-light tracking-widest uppercase mb-10">
-                        O futuro do Roleplay começa agora.
-                    </p>
-                    <div class="flex flex-col md:flex-row gap-5 justify-center">
-                        <button @click="page = 'loja'" class="bg-white text-black px-12 py-4 font-bold uppercase tracking-widest hover:bg-purple-600 hover:text-white transition duration-500">
-                            Adquirir Benefícios
-                        </button>
-                        <a href="https://discord.gg/dSD3cvS5bb" class="border border-white/20 px-12 py-4 font-bold uppercase tracking-widest hover:bg-white/10 transition">
-                            Entrar no Discord
-                        </a>
-                    </div>
-                </div>
-            </header>
-
-            <section class="py-24 px-6 bg-[#050505]">
-                <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
-                    <div>
-                        <h2 class="font-header text-4xl mb-6 uppercase italic">Imersão Total</h2>
-                        <p class="text-gray-400 leading-relaxed mb-6">
-                            Na Nova Capital, buscamos o equilíbrio perfeito entre diversão e realismo. Sistemas exclusivos, economia balanceada e uma staff ativa para garantir o seu divertimento.
-                        </p>
-                        <ul class="space-y-3 text-sm font-bold uppercase text-purple-500">
-                            <li>+ Sistemas de Drogas Exclusivos</li>
-                            <li>+ Concessionária com +500 Carros</li>
-                            <li>+ Eventos Diários</li>
-                        </ul>
-                    </div>
-                    <div class="glass h-64 rounded-xl flex items-center justify-center border-purple-600/30">
-                        <span class="text-purple-600 font-header text-2xl">[ VÍDEO DO SERVIDOR ]</span>
-                    </div>
-                </div>
-            </section>
-        </div>
-    </template>
-
-    <template x-if="page === 'loja'">
-        <main class="pt-32 pb-20 px-6 max-w-7xl mx-auto">
-            <div class="text-center mb-16">
-                <h2 class="font-header text-5xl uppercase italic mb-4">Loja <span class="text-purple-600">Oficial</span></h2>
-                <div class="w-24 h-1 bg-purple-600 mx-auto"></div>
-            </div>
-
-            <div class="flex justify-center gap-4 mb-12">
-                <button @click="filter = 'todos'" :class="filter === 'todos' ? 'bg-purple-600' : 'bg-white/5'" class="px-8 py-2 rounded uppercase text-[10px] font-bold tracking-widest">Todos</button>
-                <button @click="filter = 'vip'" :class="filter === 'vip' ? 'bg-purple-600' : 'bg-white/5'" class="px-8 py-2 rounded uppercase text-[10px] font-bold tracking-widest">VIPs</button>
-                <button @click="filter = 'coins'" :class="filter === 'coins' ? 'bg-purple-600' : 'bg-white/5'" class="px-8 py-2 rounded uppercase text-[10px] font-bold tracking-widest">Coins</button>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <template x-for="item in products">
-                    <div x-show="filter === 'todos' || filter === item.category" 
-                         class="card-premium p-8 rounded-lg flex flex-col justify-between">
-                        <div>
-                            <div class="flex justify-between items-start mb-6">
-                                <h3 class="font-header text-xl" x-text="item.name"></h3>
-                                <span class="text-[10px] bg-purple-600/20 text-purple-500 px-2 py-1 rounded" x-text="item.badge"></span>
-                            </div>
-                            <p class="text-gray-500 text-sm mb-8 leading-relaxed italic" x-text="item.desc"></p>
-                        </div>
-                        <div>
-                            <div class="text-3xl font-bold mb-6 text-white" x-text="'R$ ' + item.price.toFixed(2)"></div>
-                            <button @click="cart = item; page = 'checkout'" 
-                                    class="w-full border border-purple-600 text-purple-500 hover:bg-purple-600 hover:text-white py-4 font-bold uppercase tracking-widest transition duration-300">
-                                Adquirir Agora
-                            </button>
-                        </div>
-                    </div>
-                </template>
-            </div>
-        </main>
-    </template>
-
-    <template x-if="page === 'checkout'">
-        <main class="pt-40 pb-20 px-6 max-w-xl mx-auto">
-            <div class="glass p-10 rounded-lg">
-                <h2 class="font-header text-2xl mb-8 uppercase italic">Finalizar Pedido</h2>
-                <div class="flex justify-between border-b border-white/10 pb-4 mb-8">
-                    <span class="text-gray-400 uppercase font-bold text-xs" x-text="cart.name"></span>
-                    <span class="text-purple-500 font-bold" x-text="'R$ ' + cart.price.toFixed(2)"></span>
-                </div>
-                
-                <div class="mb-8">
-                    <label class="block text-[10px] uppercase font-bold text-gray-500 mb-2">ID do Discord (usuario#0000)</label>
-                    <input type="text" x-model="discordID" class="w-full bg-white/5 border border-white/10 p-4 rounded focus:border-purple-600 outline-none transition">
-                </div>
-
-                <button @click="alert('Redirecionando para pagamento seguro...')" class="w-full bg-purple-600 py-4 font-bold uppercase tracking-widest btn-glow">
-                    Ir para o Pagamento
-                </button>
-                <button @click="page = 'loja'" class="w-full mt-4 text-gray-500 text-[10px] font-bold uppercase">Voltar</button>
-            </div>
-        </main>
-    </template>
-
-    <footer class="py-20 border-t border-white/5 bg-[#030303] px-6">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-10">
-            <div>
-                <div class="font-header text-xl mb-4">NOVA<span class="text-purple-600">CAPITAL</span></div>
-                <p class="text-gray-600 text-[10px] uppercase tracking-widest">© 2026 High Quality Roleplay. All rights reserved.</p>
-            </div>
-            <div class="flex gap-8">
-                <a href="#" class="text-gray-500 hover:text-white transition uppercase text-[10px] font-bold">Termos</a>
-                <a href="#" class="text-gray-500 hover:text-white transition uppercase text-[10px] font-bold">Discord</a>
-                <a href="#" class="text-gray-500 hover:text-white transition uppercase text-[10px] font-bold">Contato</a>
-            </div>
-        </div>
-    </footer>
-
-    <div id="fake-notif" class="fixed bottom-10 right-10 z-[100] glass p-4 rounded-lg translate-x-[200%] transition-all duration-700">
-        <div class="flex items-center gap-4">
-            <div class="w-10 h-10 bg-purple-600 rounded flex items-center justify-center font-bold italic">NC</div>
-            <div>
-                <p class="text-[10px] text-purple-400 font-bold uppercase">Novo Morador VIP</p>
-                <p class="text-sm font-bold" id="notif-content">Alguém comprou!</p>
-            </div>
-        </div>
+    <div id="loader" class="loader">
+        <div class="text-3xl font-bold neon-text animate-pulse">NEXUS BOTS...</div>
     </div>
 
+    <div id="particles-js"></div>
+
+    <nav class="fixed w-full z-50 px-6 py-4 flex justify-between items-center bg-black/50 backdrop-blur-md border-b border-white/10">
+        <div class="text-2xl font-black tracking-tighter italic">NEXUS<span class="text-purple-500">BOTS</span></div>
+        <div class="hidden md:flex space-x-8 font-medium">
+            <a href="#" class="hover:text-purple-400 transition">Home</a>
+            <a href="#servicos" class="hover:text-purple-400 transition">Serviços</a>
+            <a href="#portfolio" class="hover:text-purple-400 transition">Portfólio</a>
+            <a href="#contacto" class="hover:text-purple-400 transition">Contacto</a>
+        </div>
+        <a href="https://discord.gg/nexusbots" target="_blank" class="btn-nexus px-6 py-2 rounded-full font-bold flex items-center gap-2">
+            <i class="fab fa-discord"></i> Entrar no Discord
+        </a>
+    </nav>
+
+    <section class="h-screen flex flex-col justify-center items-center text-center px-4">
+        <h1 class="text-4xl md:text-7xl font-extrabold mb-6 tracking-tight uppercase" data-aos="fade-up">
+            Desenvolvimento de Bots e <br>
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600">Websites Profissionais</span>
+        </h1>
+        <p class="text-gray-400 text-lg md:text-xl max-w-2xl mb-10" data-aos="fade-up" data-aos-delay="200">
+            Automatiza o teu servidor Discord e cria a tua presença online com a Nexus Bots.
+        </p>
+        <div class="flex flex-col md:flex-row gap-4" data-aos="fade-up" data-aos-delay="400">
+            <a href="#servicos" class="btn-nexus px-10 py-4 rounded-xl font-bold text-lg transition-transform hover:scale-105">🚀 Ver Serviços</a>
+            <a href="#contacto" class="bg-white/10 hover:bg-white/20 px-10 py-4 rounded-xl font-bold text-lg backdrop-blur-md transition">💬 Abrir Ticket</a>
+        </div>
+    </section>
+
+    <section id="servicos" class="py-20 px-6 max-w-7xl mx-auto">
+        <h2 class="text-4xl font-bold text-center mb-16" data-aos="fade-down">Nossos <span class="text-purple-500">Serviços</span></h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div class="glass p-8 rounded-3xl text-center" data-aos="zoom-in">
+                <i class="fas fa-robot text-5xl text-purple-500 mb-6"></i>
+                <h3 class="text-xl font-bold mb-4">Bots Personalizados</h3>
+                <p class="text-gray-400">Sistemas de economia, moderação e integrações exclusivas para o teu servidor.</p>
+            </div>
+            <div class="glass p-8 rounded-3xl text-center" data-aos="zoom-in" data-aos-delay="100">
+                <i class="fas fa-globe text-5xl text-blue-500 mb-6"></i>
+                <h3 class="text-xl font-bold mb-4">Criação de Websites</h3>
+                <p class="text-gray-400">Landing pages, Dashboards e sites corporativos modernos e responsivos.</p>
+            </div>
+            <div class="glass p-8 rounded-3xl text-center" data-aos="zoom-in" data-aos-delay="200">
+                <i class="fas fa-ticket-alt text-5xl text-purple-500 mb-6"></i>
+                <h3 class="text-xl font-bold mb-4">Tickets Automáticos</h3>
+                <p class="text-gray-400">Sistemas eficientes de suporte para atender os teus clientes via Discord.</p>
+            </div>
+            <div class="glass p-8 rounded-3xl text-center" data-aos="zoom-in" data-aos-delay="300">
+                <i class="fas fa-lock text-5xl text-blue-500 mb-6"></i>
+                <h3 class="text-xl font-bold mb-4">Segurança & Automação</h3>
+                <p class="text-gray-400">Proteção anti-raid e automação de processos para o teu negócio.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="portfolio" class="py-20 bg-black/30">
+        <div class="max-w-7xl mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center mb-16" data-aos="fade-up">Projetos <span class="text-blue-500">Recentes</span></h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="rounded-2xl overflow-hidden border border-white/10 glass group" data-aos="fade-up">
+                    <div class="h-48 bg-purple-900/20 flex items-center justify-center">
+                        <i class="fas fa-project-diagram text-4xl text-purple-500"></i>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="font-bold text-xl mb-2">Nexus Multi-Tool</h4>
+                        <p class="text-gray-400 text-sm">Bot de moderação avançada com logs e sistema de níveis.</p>
+                    </div>
+                </div>
+                <div class="rounded-2xl overflow-hidden border border-white/10 glass group" data-aos="fade-up" data-aos-delay="100">
+                    <div class="h-48 bg-blue-900/20 flex items-center justify-center">
+                        <i class="fas fa-shopping-cart text-4xl text-blue-500"></i>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="font-bold text-xl mb-2">Loja Virtual Pro</h4>
+                        <p class="text-gray-400 text-sm">Website integrado com sistema de pagamentos automáticos.</p>
+                    </div>
+                </div>
+                <div class="rounded-2xl overflow-hidden border border-white/10 glass group" data-aos="fade-up" data-aos-delay="200">
+                    <div class="h-48 bg-indigo-900/20 flex items-center justify-center">
+                        <i class="fas fa-user-shield text-4xl text-indigo-500"></i>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="font-bold text-xl mb-2">Security Nexus</h4>
+                        <p class="text-gray-400 text-sm">Sistema de verificação por captcha para servidores Discord.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contacto" class="py-20 px-6 max-w-3xl mx-auto">
+        <div class="glass p-10 rounded-3xl" data-aos="fade-up">
+            <h2 class="text-3xl font-bold mb-2 text-center">ABRIR TICKET</h2>
+            <p class="text-center text-gray-400 mb-8">Envia o teu pedido e entraremos em contacto pelo Discord.</p>
+            
+            <form id="ticketForm" class="space-y-6">
+                <div>
+                    <label class="block mb-2 text-sm text-gray-400 uppercase font-bold">Teu Nome</label>
+                    <input type="text" id="nome" placeholder="Ex: João Silva" required class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-purple-500 transition">
+                </div>
+                <div>
+                    <label class="block mb-2 text-sm text-gray-400 uppercase font-bold">Discord ID / Username</label>
+                    <input type="text" id="discord_user" placeholder="Ex: nexus#0001" required class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-purple-500 transition">
+                </div>
+                <div>
+                    <label class="block mb-2 text-sm text-gray-400 uppercase font-bold">Descrição do Pedido</label>
+                    <textarea id="pedido" rows="4" placeholder="Explica o que precisas..." required class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-purple-500 transition"></textarea>
+                </div>
+                <button type="submit" id="btnSubmit" class="w-full btn-nexus py-4 rounded-xl font-bold text-lg uppercase tracking-widest">
+                    Enviar para a Nexus Bots
+                </button>
+            </form>
+            <p id="msgStatus" class="mt-4 text-center hidden font-bold"></p>
+        </div>
+    </section>
+
+    <footer class="py-10 border-t border-white/10 text-center text-gray-500">
+        <p class="mb-2 italic font-bold text-white">NEXUS BOTS</p>
+        <p>&copy; 2026 - Soluções Tecnológicas Modernas</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
-        function storeApp() {
-            return {
-                page: 'home',
-                filter: 'todos',
-                cart: null,
-                discordID: '',
-                scrollY: 0,
-                products: [
-                    { category: 'vip', name: 'VIP SUPREMO', price: 150.00, badge: 'MELHOR VALOR', desc: 'Salário de 100k, 5 carros importados, mansão e prioridade máxima.' },
-                    { category: 'vip', name: 'VIP ELITE', price: 80.00, badge: 'POPULAR', desc: 'Salário de 50k, 2 carros importados e prioridade na fila.' },
-                    { category: 'coins', name: '2.000.000 COINS', price: 50.00, badge: 'PROMO', desc: 'Moedas limpas entregues diretamente no seu banco.' },
-                    { category: 'coins', name: '500.000 COINS', price: 20.00, badge: 'RECOMENDADO', desc: 'Ideal para comprar seu primeiro carro e casa.' }
-                ],
-                init() {
-                    window.addEventListener('scroll', () => this.scrollY = window.scrollY);
-                    
-                    // Notificação Fake
-                    const users = ["Mandrake", "Ghost", "Xandão", "Biel", "Vini7"];
-                    const el = document.getElementById('fake-notif');
-                    const content = document.getElementById('notif-content');
-                    
-                    setInterval(() => {
-                        const u = users[Math.floor(Math.random()*users.length)];
-                        content.innerText = `${u} adquiriu um VIP!`;
-                        el.classList.remove('translate-x-[200%]');
-                        setTimeout(() => el.classList.add('translate-x-[200%]'), 5000);
-                    }, 25000);
+        // Inicializar AOS
+        AOS.init({ duration: 800, once: true });
+
+        // Remover Loader quando carregar
+        window.onload = () => {
+            setTimeout(() => {
+                document.getElementById('loader').style.opacity = '0';
+                setTimeout(() => document.getElementById('loader').style.display = 'none', 500);
+            }, 800);
+        };
+
+        // INTEGRAÇÃO WEBHOOK (O TEU LINK JÁ ESTÁ AQUI)
+        const webhookURL = "https://discord.com/api/webhooks/1491861355639345172/T59yM5NqdTH-tpqWN7siQ0zT_yS5QvSAOqC8vD39lW_UcyohWmrmtCOIRy3qjnkoflIa";
+
+        document.getElementById('ticketForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('btnSubmit');
+            const status = document.getElementById('msgStatus');
+
+            // Pegar valores
+            const nome = document.getElementById('nome').value;
+            const userDiscord = document.getElementById('discord_user').value;
+            const pedido = document.getElementById('pedido').value;
+
+            btn.disabled = true;
+            btn.innerText = "A ENVIAR...";
+
+            // Criar o Embed para o Discord
+            const payload = {
+                username: "NEXUS BOTS WEB",
+                avatar_url: "https://cdn-icons-png.flaticon.com/512/4712/4712035.png",
+                embeds: [{
+                    title: "🔔 NOVO TICKET - NEXUS BOTS",
+                    color: 8931327, // Roxo Neon
+                    fields: [
+                        { name: "👤 Cliente", value: nome, inline: true },
+                        { name: "🆔 Discord", value: userDiscord, inline: true },
+                        { name: "📝 Descrição do Pedido", value: pedido }
+                    ],
+                    footer: { text: "Ticket enviado via Site Oficial" },
+                    timestamp: new Date()
+                }]
+            };
+
+            try {
+                const response = await fetch(webhookURL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (response.ok) {
+                    status.innerText = "✅ TICKET ABERTO! A nossa equipa recebeu o teu pedido.";
+                    status.className = "mt-4 text-center text-green-400 font-bold";
+                    status.classList.remove('hidden');
+                    document.getElementById('ticketForm').reset();
+                } else {
+                    throw new Error();
                 }
+            } catch (err) {
+                status.innerText = "❌ ERRO AO ENVIAR. Verifica a tua ligação ou tenta mais tarde.";
+                status.className = "mt-4 text-center text-red-500 font-bold";
+                status.classList.remove('hidden');
+            } finally {
+                btn.disabled = false;
+                btn.innerText = "Enviar para a Nexus Bots";
             }
-        }
+        });
+
+        // Configuração de Partículas (Background Animado)
+        particlesJS("particles-js", {
+            "particles": {
+                "number": { "value": 100, "density": { "enable": true, "value_area": 800 } },
+                "color": { "value": "#8b5cf6" },
+                "shape": { "type": "circle" },
+                "opacity": { "value": 0.3, "random": true },
+                "size": { "value": 3, "random": true },
+                "line_linked": { "enable": true, "distance": 150, "color": "#6366f1", "opacity": 0.2, "width": 1 },
+                "move": { "enable": true, "speed": 1.5, "direction": "none", "random": false, "straight": false, "out_mode": "out", "bounce": false }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": { "onhover": { "enable": true, "mode": "repulse" }, "onclick": { "enable": true, "mode": "push" } },
+                "modes": { "repulse": { "distance": 100, "duration": 0.4 }, "push": { "particles_nb": 4 } }
+            },
+            "retina_detect": true
+        });
     </script>
 </body>
 </html>
